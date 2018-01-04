@@ -1,0 +1,36 @@
+---
+- name: "Atualiza o Sistema Operacional"
+  shell: sudo  yum update -y;
+
+- name: "Instala os pacotes necessarios"
+  shell: sudo  yum install vim telnet wget git net-tools bind-utils iptables-services bridge-utils bash-completion nfs-utils -y;      
+
+- name: "Instala os pacotes do OpenShift"
+  shell: sudo  yum install ansible atomic-openshift-utils atomic-openshift-excluder atomic-openshift-docker-excluder -y;      
+
+- name: "Install Docker"
+  shell: sudo yum install docker -y;   
+
+- name: "Configurações Docker Storage - 2"
+  copy:
+    dest: /etc/sysconfig/docker-storage-setup
+    content: |
+          DEVS=/dev/sdb
+          VG=docker-vg
+
+- name: "Para o Firewalld"
+  shell: sudo systemctl stop firewalld;
+
+- name: "Desabilita o Firewalld"
+  shell: sudo systemctl disable firewalld;
+
+- name: "Execute Docker Storage Setup"
+  shell: sudo docker-storage-setup;   
+
+- name: "Enable Docker"
+  shell: sudo systemctl enable docker;  
+
+- name: "Inicia Docker"
+  shell: sudo systemctl start docker;
+
+

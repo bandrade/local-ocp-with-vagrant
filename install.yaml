@@ -1,0 +1,41 @@
+---
+- name: Configure ssh keys
+  hosts: localhost
+  tasks:
+  - command: find /home/vagrant/sync/vagrant/.vagrant/machines -name private_key
+    register: private_keys
+
+  - file:
+      src: "{{ item }}"
+      dest: "/home/vagrant/.ssh/{{ item | regex_replace('^.*/machines/([^/]*)/.*', '\\1') }}.key"
+      state: link
+    with_items: "{{ private_keys.stdout_lines }}"
+
+- name: Host bootstrapping
+  hosts: all
+  sudo: True
+  user: vagrant
+  vars:
+    openshift_required_repos: ['rhel-7-server-rpms', 'rhel-7-server-extras-rpms', 'rhel-7-server-ose-3.6-rpms', 'rhel-7-fast-datapath-rpms']
+  tasks:
+  - command: subscription-manager repos --disable='*'
+    ignore_errors: yes
+  - command: subscription-manager repos --enable={{ item }}
+    with_items: "{{ openshift_required_repos }}"
+  
+  - replace:
+      dest: /etc/hosts
+      regexp: '^(127\.0\.0\.1\s*)\S*\.example\.com (.*)'
+      replace: '\1\2'
+- name: Prereques
+  hosts: masters,nodes
+  sudo: True
+  user: vagrant
+  tasks:
+    - include: tasks/prereqs.yaml
+     
+- name: Configure ssh keys
+  hosts: admin1
+  tasks:
+  - include: tasks/install_bootstrap_enterprise.yaml
+    when: "{{ deployment_type == 'openshift-enterprise' }}"
