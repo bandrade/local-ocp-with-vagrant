@@ -34,16 +34,20 @@ The iso image that the vagrant image is created from should be the 'RHEL 7.2 Bin
 Installation
 ------------
 Define your disks location by exporting the DISKS_LOCATION environment variable, by default it uses the current directory
+
     export DISKS_LOCATION=<location>
 
 Define your Redhat account details by exporting SUBS_USERNAME and SUBS_PASSWORD enviroment variables
+
     export SUBS_USERNAME=<your_username>@redhat.com
     export SUBS_PASSWORD=<your_passwd>
 
 Define which version of Openshift Container Platform by exporting enviroment OPENSHIFT_REPO environmnet variable
+
     export OPENSHIFT_REPO=rhel-7-server-ose-3.<X>-rpms
 
 Clone the repository 
+
     git clone https://github.com/bandrade/local-ocp-with-vagrant.git
     cd vagrant
     vagrant up 
