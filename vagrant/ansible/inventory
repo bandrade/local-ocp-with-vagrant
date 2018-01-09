@@ -11,7 +11,7 @@ deployment_type=openshift-enterprise
 openshift_master_cluster_hostname=master1.example.com
 openshift_master_cluster_public_hostname=master1.example.com
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
-openshift_master_htpasswd_user={'admin': '$apr1$nWG7vwhy$jCMCBmBrW3MEYmCFCckYk1'}
+openshift_master_htpasswd_user={'admin': '$apr1$jE6QL5rm$Ex8FDUY49yiAh4XdaRBeY/'}
 openshift_master_default_subdomain=apps.example.com
 openshift_master_cluster_method=native
 osm_default_node_selector='region=primary'

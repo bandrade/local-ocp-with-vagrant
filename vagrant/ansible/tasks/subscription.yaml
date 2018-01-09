@@ -1,0 +1,29 @@
+---
+  - name: "Clean older subscritions on OS"
+    command: subscription-manager clean
+
+  - name: "Register a plain new subscrition"
+    redhat_subscription:
+     state: present
+     username: "{{ lookup('env','SUBS_USERNAME') }}"
+     password: "{{ lookup('env','SUBS_PASSWORD') }}"
+     autosubscribe: false
+   
+  - block:
+        - name: Get pool id
+          shell: subscription-manager list --available --pool-only --matches="Employee SKU" | head -n 1
+          register: pool_id
+          changed_when: no
+
+        - name: Fail if no pool ID is returned
+          fail:
+            msg: No subscription matching found
+          when: pool_id.stdout == ''
+
+        - name: Attach subscription
+          command: subscription-manager attach --pool='{{ pool_id.stdout }}'
+  
+  - name: Add Openshift Repositories
+    command: subscription-manager repos --enable={{ item }}
+    with_items:
+     - "{{ openshift_required_repos }}"

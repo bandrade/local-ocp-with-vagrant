@@ -1,0 +1,64 @@
+---
+- name: "Update OS"
+  shell: sudo  yum update -y;
+
+- name: Package {{ item }} is installed
+  yum:
+   name: "{{ item }}"
+   state: installed
+  with_items:
+  - telnet
+  - wget 
+  - git 
+  - net-tools 
+  - bind-utils 
+  - iptables-services 
+  - bridge-utils 
+  - bash-completion 
+  - nfs-utils
+
+- name: Openshift Package {{ item }} is installed
+  yum:
+   name: "{{ item }}"
+   state: installed
+  with_items:
+  - ansible
+  - atomic-openshift-utils 
+  - atomic-openshift-excluder 
+  - atomic-openshift-docker-excluder
+  - bind-utils 
+  - iptables-services 
+  - bridge-utils 
+  - bash-completion 
+  - nfs-utils
+  - docker
+    
+- name: "Docker storage configurations"
+  copy:
+    dest: /etc/sysconfig/docker-storage-setup
+    content: |
+          DEVS=/dev/sdb
+          VG=docker-vg
+
+- name: "Stops firewalld"
+  service:
+   name: firewalld
+   state: stopped
+
+- name: "Disable firewalld"
+  service:
+   name: firewalld
+   enabled: no
+
+- name: "Docker Storage Setup"
+  command: sudo docker-storage-setup;   
+
+- name: "Enable Docker"
+  service:
+   name: docker
+   enabled: yes
+
+- name: "Starts Docker"
+  service:
+   name: docker
+   state: started

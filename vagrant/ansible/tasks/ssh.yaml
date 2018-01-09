@@ -1,0 +1,11 @@
+---
+  - name: Getting private keys
+    command: find /home/vagrant/sync/vagrant/.vagrant/machines -name private_key
+    register: private_keys
+  
+  - name: Sharing private keys
+    file:
+      src: "{{ item }}"
+      dest: "/home/vagrant/.ssh/{{ item | regex_replace('^.*/machines/([^/]*)/.*', '\\1') }}.key"
+      state: link
+    with_items: "{{ private_keys.stdout_lines }}"

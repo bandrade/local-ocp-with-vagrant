@@ -1,0 +1,73 @@
+---
+- name: master1.example.com
+  ip: 192.168.50.20
+  memory: 1024
+  cpu: 2
+  disk: master1.vdi
+  disk_size: 10240
+  alias: "master1"
+ 
+- name: node1.example.com
+  ip: 192.168.50.22
+  memory: 3096
+  cpu: 2
+  disk: node1.vdi
+  disk_size: 10240
+  alias: node1
+
+- name: node2.example.com
+  ip: 192.168.50.23
+  memory: 3096
+  cpu: 2
+  disk: node2.vdi
+  disk_size: 10240
+  alias: node2
+
+- name: infranode1.example.com
+  ip: 192.168.50.24
+  memory: 3096
+  cpu: 2
+  disk: infranode1.vdi
+  disk_size: 10240
+  alias: infranode1
+
+- name: admin1.example.com
+  ip: 192.168.50.26
+  memory: 512
+  cpu: 1
+  disk: admin1.vdi
+  disk_size: 1024
+  alias: admin1
+  sync:
+   - sync_type: sshfs 
+     source: ".."
+     target: "/home/vagrant/sync"
+   
+   - sync_type: sshfs 
+     source: ".vagrant"
+     target: "/home/vagrant/.hidden"
+  ansible: 
+   - script: "install pre-reqs" 
+     verbose: false
+     install: true
+     group: "OSEv3:localhost"
+     path: "/home/vagrant/sync/vagrant"
+     playbook: "/home/vagrant/sync/vagrant/ansible/install.yaml"
+     inventory: "/home/vagrant/sync/vagrant/ansible/inventory"
+   
+   - script: "verify facts OCP" 
+     verbose: false
+     install: true
+     group: "OSEv3:localhost"
+     path: "/home/vagrant/sync/vagrant"
+     playbook: "/usr/share/ansible/openshift-ansible/playbooks/byo/openshift_facts.yml"
+     inventory: "/home/vagrant/sync/vagrant/inventory"
+
+   - script: "install OCP" 
+     verbose: false
+     install: true
+     group: "OSEv3:localhost"
+     path: "/home/vagrant/sync/vagrant"
+     playbook: "/usr/share/ansible/openshift-ansible/playbooks/byo/config.yml"
+     inventory: "/home/vagrant/sync/vagrant/inventory"
+

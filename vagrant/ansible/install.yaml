@@ -1,0 +1,35 @@
+---
+- name: Configure ssh keys
+  hosts: localhost
+  tasks:
+   - include: tasks/ssh.yaml
+
+- name: Host bootstrapping
+  hosts: all
+  sudo: True
+  user: vagrant
+  vars:
+    openshift_required_repos: ['rhel-7-server-rpms', 'rhel-7-server-extras-rpms', "{{ lookup('env','OPENSHIFT_REPO') }}", 'rhel-7-fast-datapath-rpms']
+  tasks:
+  - include: tasks/subscription.yaml
+ 
+  - name: DNS Settings
+    replace:
+      dest: /etc/hosts
+      regexp: '^(127\.0\.0\.1\s*)\S*\.example\.com (.*)'
+      replace: '\1\2'
+
+- name: Install PreReqs
+  hosts: masters,nodes
+  sudo: True
+  user: vagrant
+  tasks:
+    - include: tasks/prereqs.yaml
+
+- name: Install PreReqs
+  hosts: masters
+  sudo: True
+  user: vagrant
+  tasks:
+    - name: Add entries to the exclude directive in the host’s /etc/yum.conf
+      command: atomic-openshift-excluder unexclude
