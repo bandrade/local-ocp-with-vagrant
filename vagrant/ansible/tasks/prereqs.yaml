@@ -1,11 +1,13 @@
 ---
-- name: "Update OS"
-  shell: sudo  yum update -y;
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
 
-- name: Package {{ item }} is installed
+- name: Install mandatory packages for Openshift
   yum:
    name: "{{ item }}"
-   state: installed
+   state: present
   with_items:
   - telnet
   - wget 
@@ -17,10 +19,10 @@
   - bash-completion 
   - nfs-utils
 
-- name: Openshift Package {{ item }} is installed
+- name: Install Openshift packages
   yum:
    name: "{{ item }}"
-   state: installed
+   state: present
   with_items:
   - ansible
   - atomic-openshift-utils 
@@ -51,7 +53,7 @@
    enabled: no
 
 - name: "Docker Storage Setup"
-  command: sudo docker-storage-setup;   
+  command: docker-storage-setup 
 
 - name: "Enable Docker"
   service:

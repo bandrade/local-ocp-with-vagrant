@@ -19,17 +19,29 @@
       regexp: '^(127\.0\.0\.1\s*)\S*\.example\.com (.*)'
       replace: '\1\2'
 
-- name: Install PreReqs
+- name: Install PreReqs Master/Nodes
   hosts: masters,nodes
   sudo: True
   user: vagrant
   tasks:
     - include: tasks/prereqs.yaml
 
-- name: Install PreReqs
+- name: Install PreReqs Master
   hosts: masters
   sudo: True
   user: vagrant
   tasks:
     - name: Add entries to the exclude directive in the host’s /etc/yum.conf
       command: atomic-openshift-excluder unexclude
+
+
+- name: Install PreReqs Bastion
+  hosts: localhost
+  sudo: True
+  user: vagrant
+  tasks:
+   - name: Install Openshift packages
+     yum:
+      name: "atomic-openshift-utils"
+      state: present
+ 

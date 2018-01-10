@@ -61,7 +61,7 @@
      group: "OSEv3:localhost"
      path: "/home/vagrant/sync/vagrant"
      playbook: "/usr/share/ansible/openshift-ansible/playbooks/byo/openshift_facts.yml"
-     inventory: "/home/vagrant/sync/vagrant/inventory"
+     inventory: "/home/vagrant/sync/vagrant/ansible/inventory"
 
    - script: "install OCP" 
      verbose: false
@@ -69,5 +69,5 @@
      group: "OSEv3:localhost"
      path: "/home/vagrant/sync/vagrant"
      playbook: "/usr/share/ansible/openshift-ansible/playbooks/byo/config.yml"
-     inventory: "/home/vagrant/sync/vagrant/inventory"
+     inventory: "/home/vagrant/sync/vagrant/ansible/inventory"
 

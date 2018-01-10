@@ -6,7 +6,15 @@ REQUIRED_PLUGINS        = %w(vagrant-hostmanager)
 SUGGESTED_PLUGINS       = %w(vagrant-sshfs landrush)
 errors                  = []
 servers                 = YAML.load_file('servers.yaml')
-box_name                = 'rhel-7.2'
+box_name                = ENV['BOX_NAME'] || 'rhel-7.2'
+
+error_msg               = "Environment Variables SUBS_USERNAME and "
+error_msg              += "SUBS_PASSWORD are mandatory fields to run this provisioning script. Please review "
+error_msg              += "https://github.com/bandrade/local-ocp-with-vagrant/blob/master/README.md for mor information"
+
+if ! ENV['SUBS_USERNAME'] or ! ENV['SUBS_PASSWORD']
+ fail Vagrant::Errors::VagrantError.new, error_msg
+end
 
 def message(name)
   "#{name} plugin is not installed, run `vagrant plugin install #{name}` to install it."
@@ -57,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	serv.vm.box = box_name
 	serv.vm.network :private_network, ip: servers["ip"]
 	serv.hostmanager.aliases = servers["alias"]
-        serv.vm.hostname = servers["hostname"]
+        serv.vm.hostname = servers["name"]
 	
 	serv.vm.provider :virtualbox do |domain|
 		selected_disk = disks + servers["disk"]
