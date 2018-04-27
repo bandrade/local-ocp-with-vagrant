@@ -5,11 +5,7 @@ This is a Vagrant based project that demonstrates an advanced Openshift Origin L
 
 The documentation for the installation process can be found at
 
-https://docs.openshift.org/latest/welcome/index.html
-
-or
-
-https://docs.openshift.com/container-platform/3.7/install_config/install/planning.html
+https://docs.openshift.com/container-platform/latest/install_config/install/planning.html
 
 
 Pre-requisites
