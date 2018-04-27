@@ -1,7 +1,7 @@
 Overview
 --------
 
-This is a Vagrant based project that demonstrates an advanced Openshift Origin Latest or Container Platform 3.6 install i.e. one using an Ansible playbook.
+This is a Vagrant based project that demonstrates an advanced Openshift Container Platform 3.9 install i.e. one using an Ansible playbook.
 
 The documentation for the installation process can be found at
 
