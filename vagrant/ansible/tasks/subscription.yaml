@@ -26,7 +26,7 @@
   - name: Disable old repositories
     command: subscription-manager repos --disable=*
     ignore_errors: yes	
-
+ 
   - name: Add Openshift Repositories
     command: subscription-manager repos --enable={{ item }}
     with_items:

@@ -1,7 +1,7 @@
 ---
 - name: master1.example.com
   ip: 192.168.50.20
-  memory: 1024
+  memory: 3096
   cpu: 2
   disk: master1.vdi
   disk_size: 10240
@@ -60,7 +60,7 @@
      install: true
      group: "OSEv3:localhost"
      path: "/home/vagrant/sync/vagrant"
-     playbook: "/usr/share/ansible/openshift-ansible/playbooks/byo/openshift_facts.yml"
+     playbook: "/usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml"
      inventory: "/home/vagrant/sync/vagrant/ansible/inventory"
 
    - script: "install OCP" 
@@ -68,6 +68,6 @@
      install: true
      group: "OSEv3:localhost"
      path: "/home/vagrant/sync/vagrant"
-     playbook: "/usr/share/ansible/openshift-ansible/playbooks/byo/config.yml"
+     playbook: "/usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml"
      inventory: "/home/vagrant/sync/vagrant/ansible/inventory"
 

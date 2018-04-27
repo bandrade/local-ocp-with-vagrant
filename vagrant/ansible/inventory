@@ -25,7 +25,7 @@ openshift_hosted_registry_storage_host=admin1.example.com
 openshift_hosted_registry_storage_nfs_directory=/srv/nfs
 openshift_hosted_registry_storage_volume_name=registry
 openshift_hosted_registry_storage_volume_size=2Gi
-openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availabilityi,package_version
+openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability,package_version
 
 # External NFS Host
 # NFS volume must already exist with path "nfs_directory/_volume_name" on
@@ -72,7 +72,7 @@ master1 openshift_ip=192.168.50.20 ansible_host=192.168.50.20 ansible_ssh_privat
 node1 openshift_ip=192.168.50.22 ansible_host=192.168.50.22 ansible_ssh_private_key_file=/home/vagrant/.ssh/node1.key openshift_node_labels="{'region': 'primary', 'zone': 'east'}"
 node2 openshift_ip=192.168.50.23 ansible_host=192.168.50.23 ansible_ssh_private_key_file=/home/vagrant/.ssh/node2.key openshift_node_labels="{'region': 'primary', 'zone': 'west'}"
 infranode1 openshift_ip=192.168.50.24 ansible_host=192.168.50.24 ansible_ssh_private_key_file=/home/vagrant/.ssh/infranode1.key openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-master1 openshift_ip=192.168.50.20 ansible_host=192.168.50.20 ansible_ssh_private_key_file=/home/vagrant/.ssh/master1.key openshift_schedulable=False
+master1 openshift_ip=192.168.50.20 ansible_host=192.168.50.20 ansible_ssh_private_key_file=/home/vagrant/.ssh/master1.key
 
 [etcd]
 master1 openshift_ip=192.168.50.20 ansible_host=192.168.50.20 ansible_ssh_private_key_file=/home/vagrant/.ssh/master1.key 

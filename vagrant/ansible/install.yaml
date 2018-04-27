@@ -9,7 +9,7 @@
   sudo: True
   user: vagrant
   vars:
-    openshift_required_repos: ['rhel-7-server-rpms', 'rhel-7-server-extras-rpms', "{{ lookup('env','OPENSHIFT_REPO') }}", 'rhel-7-fast-datapath-rpms']
+    openshift_required_repos: ['rhel-7-server-rpms', 'rhel-7-server-extras-rpms', "{{ lookup('env','OPENSHIFT_REPO') }}", 'rhel-7-fast-datapath-rpms','rhel-7-server-ansible-2.4-rpms']
   tasks:
   - include: tasks/subscription.yaml
  

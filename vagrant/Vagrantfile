@@ -1,6 +1,6 @@
 require 'yaml'
 disks                   = ENV['DISKS_LOCATION'] || 'disks/'  
-openshift_repo          = ENV['OPENSHIFT_REPO_VERSION'] ||  'rhel-7-server-ose-3.7-rpms'
+openshift_repo          = ENV['OPENSHIFT_REPO_VERSION'] ||  'rhel-7-server-ose-3.9-rpms'
 VAGRANTFILE_API_VERSION = '2'
 REQUIRED_PLUGINS        = %w(vagrant-hostmanager)
 SUGGESTED_PLUGINS       = %w(vagrant-sshfs landrush)
