@@ -15,8 +15,10 @@ openshift_master_htpasswd_users={'admin': '$apr1$w1HUYR4F$GHdpY1BlhP8S4X.a8wcKx/
 openshift_master_default_subdomain=apps.example.com
 openshift_master_cluster_method=native
 osm_default_node_selector='region=primary'
+openshift_web_console_extension_script_urls=['https://raw.githubusercontent.com/bandrade/disable-openshift-catalog/master/disable-catalog.js']
 
 #registry settings
+openshift_enable_unsupported_configurations=True 
 openshift_hosted_registry_selector='region=infra'
 openshift_hosted_registry_replicas=1
 openshift_hosted_registry_storage_kind=nfs
@@ -31,18 +33,22 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability,doc
 # NFS volume must already exist with path "nfs_directory/_volume_name" on
 # the storage_host. For example, the remote volume path using these
 # options would be "nfs.example.com:/exports/metrics"
-#openshift_hosted_metrics_deploy=true
-#openshift_hosted_metrics_deploy=true
-#openshift_hosted_metrics_storage_kind=nfs
-#openshift_hosted_metrics_storage_access_modes=['ReadWriteOnce']
-#openshift_hosted_metrics_storage_host=admin1.example.com
-#openshift_hosted_metrics_storage_nfs_directory=/exports/metrics
-#openshift_hosted_metrics_storage_volume_name=metrics
-#openshift_hosted_metrics_storage_volume_size=2Gi
-#openshift_hosted_metrics_storage_labels={'storage': 'metrics'}
-#openshift_hosted_metrics_heapster_requests_memory=300M
-#openshift_hosted_metrics_hawkular_requests_memory=512M
-#openshift_hosted_metrics_cassandra_requests_memory=512M
+openshift_metrics_install_metrics=true
+openshift_metrics_start_cluster=true
+openshift_metrics_storage_kind=nfs
+openshift_metrics_storage_access_modes=['ReadWriteOnce']
+openshift_metrics_storage_host=admin1.example.com
+openshift_metrics_storage_nfs_directory=/exports/metrics
+openshift_metrics_storage_volume_name=metrics
+openshift_metrics_storage_volume_size=2Gi
+openshift_metrics_storage_labels={'storage': 'metrics'}
+openshift_metrics_heapster_requests_memory=300M
+openshift_metrics_hawkular_requests_memory=512M
+openshift_metrics_cassandra_requests_memory=512M
+
+openshift_prometheus_namespace=openshift-metrics
+openshift_prometheus_node_selector={"region":"infra"}
+
 
 # External NFS Host
 # NFS volume must already exist with path "nfs_directory/_volume_name" on
